@@ -59,4 +59,6 @@ gulp.task('watch', () => {
  //gulp.watch([`${allHtmlPath}`], ['html']);
 });
 
+gulp.task('build', ['js', 'html', 'sass', 'css']);
+
 gulp.task('default', ['connect', 'watch']);
