@@ -1,0 +1,41 @@
+{
+	"name": "Craft beers",
+	"description": "This is a list of Craft Beers for testing purposes.",
+	"items": [{
+		"name": "Guinness",
+		"brewer": "Extra Stout",
+		"type": "Stout",
+		"origin": "Ireland",
+		"status": "submit"
+	}, {
+		"name": "IPA",
+		"brewer": "Smithwicks",
+		"type": "India Pale Ale",
+		"origin": "Ireland",
+		"status": "submit"
+	}, {
+		"name": "IPA",
+		"brewer": "Sierra Nevada",
+		"type": "India Pale Ale",
+		"origin": "USA",
+		"status": "submit"
+	}, {
+		"name": "Leann Follin",
+		"brewer": "O'Haras",
+		"type": "Stout",
+		"origin": "Ireland",
+		"status": "submit"
+	}, {
+		"name": "Pale Ale",
+		"brewer": "O'Haras",
+		"type": "Pale Ale",
+		"origin": "Ireland",
+		"status": "submit"
+	}, {
+		"name": "Boston Lager",
+		"brewer": "Boston Brewing Company",
+		"type": "Lager",
+		"origin": "USA",
+		"status": "submit"
+	}]
+}

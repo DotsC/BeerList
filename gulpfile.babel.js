@@ -46,7 +46,6 @@ gulp.task('html', () => {
 });
 
 /* Connect / Watch and Defaults. */
-
 gulp.task('connect', () => {
   connect.server({
     root: `${buildPath}`,
@@ -55,7 +54,7 @@ gulp.task('connect', () => {
 });
 
 gulp.task('watch', () => {
- gulp.watch([`${allHtmlPath}`, `${allSassPath}`], ['html', 'sass']);
+ gulp.watch([`${allHtmlPath}`, `${allSassPath}`,`${allJSPath}`], ['html', 'sass','js']);
  //gulp.watch([`${allHtmlPath}`], ['html']);
 });
 
