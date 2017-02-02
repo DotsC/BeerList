@@ -9,7 +9,7 @@ let namestring = nameChars.forEach(item=>{
 
 //Beer Class
 class Beer {
-  constructor(name='New Beer', brewer='OBrewer', type='Beer', origin = "USA" status="submit"){
+  constructor({name, brewer, type, origin, status}){
     this.name = name;
     this.brewer = brewer;
     this.type = type;
@@ -31,7 +31,7 @@ class BeerList {
   getbeerNames(){
     let beerList = `<UL>`;
     this.beers.forEach( beer => {
-     beerList += `<LI>${beer.name}</LI>`
+     beerList += `<LI>${beer.brewer} - ${beer.name}</LI>`;
     });
     beerList += `</UL>`
     return beerList;
@@ -40,29 +40,33 @@ class BeerList {
   getBeerNamesByType(type='Pale Ale'){
     let beerList = `<UL>`;
     this.beers.forEach( beer => {
-      if (beer.type === type) beerList += `<LI>${beer.name}</LI>`
+      if (beer.type === type) beerList += `<LI>${beer.brewer} - ${beer.name}</LI>`;
     });
     beerList += `</UL>`;
     return beerList;
   }
 
-  /*getBeerTypes(){
+  getBeerTypes() {
     let types = this.beers.map(beer => {
       console.log(beer.type);
       return beer.type;
     })
-  }*/
+  }
 
 }
 
 const AllBeers = new BeerList();
-let newBeer = new Beer('Guinness','Extra Stout','Stout','Ireland');
+
+let newBeer = new Beer({name: "Bristle IPA", brewer: "Bo Bristle Brewing Company", type: "India Pale Ale", origin: "Ireland", status: "submit"});
 AllBeers.addBeer(newBeer);
-AllBeers.addBeer(new Beer('OHaras','Leann Follin','Stout','Ireland'));
-AllBeers.addBeer(new Beer('OHaras','Pale Ale','Pale Ale','Ireland'));
-AllBeers.addBeer(new Beer('Sierra Nevada','IPA','India Pale Ale','USA'));
-
-
+AllBeers.addBeer(new Beer({"name": "Extra Stout","brewer": "Guinness","type": "Stout","origin": "Ireland","status": "submit"}));
+AllBeers.addBeer(new Beer({"name": "IPA","brewer": "Smithwicks","type": "India Pale Ale","origin": "Ireland","status": "submit"}));
+AllBeers.addBeer(new Beer({"name": "IPA","brewer": "Sierra Nevada","type": "India Pale Ale","origin": "USA","status": "submit"}));
+AllBeers.addBeer(new Beer({"name": "Leann Follin","brewer": "O'Haras","type": "Stout","origin": "Ireland","status": "submit"}));
+AllBeers.addBeer(new Beer({"name": "Pale Ale","brewer": "O'Haras","type": "Pale Ale","origin": "Ireland","status": "submit"}));
+AllBeers.addBeer(new Beer({"name": "Boston Lager","brewer": "Boston Brewing Company","type": "Lager","origin": "USA","status": "submit"}));
+AllBeers.addBeer(new Beer({"name": "Brú Rí Irish Craft IPA","brewer": "Brú Brewery","type": "India Pale Ale","origin": "Ireland","status": "submit"}));
+AllBeers.addBeer(new Beer({"name": "Black IPA","brewer": "Blacks of Kinsale","type": "India Pale Ale","origin": "Ireland","status": "submit"}));
 
 document.querySelector('#beer-type').addEventListener('change', e => {
   /*console.log(e.target.options[e.target.options.selectedIndex]);
@@ -74,5 +78,5 @@ document.querySelector('#beer-type').addEventListener('change', e => {
 
 window.addEventListener('load', (e) => {
   document.querySelector('#gen-content').innerHTML = `The Beers on File are : ${AllBeers.getbeerNames()}`;
-//  AllBeers.getBeerTypes();
+  AllBeers.getBeerTypes();
 }, false);
