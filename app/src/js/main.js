@@ -1,13 +1,4 @@
-/*const name = 'dave';
-console.log(name);
-const nameChars = ['d','a','v','e'];
-let namestring = nameChars.forEach(item=>{
-  item = item.toUpperCase();
-  console.log(item);
-});*/
-
-
-//Beer Class
+ //Beer Class
 class Beer {
   constructor({name, brewer, type, origin, status}){
     this.name = name;
@@ -28,55 +19,107 @@ class BeerList {
     this.beers.push(newBeer);
   }
 
-  getbeerNames(){
-    let beerList = `<UL>`;
-    this.beers.forEach( beer => {
-     beerList += `<LI>${beer.brewer} - ${beer.name}</LI>`;
-    });
-    beerList += `</UL>`
-    return beerList;
+  getBeers(){
+    let names = this.beers.reduce((beerList, beer) => {
+      beerList.push(beer);
+      return beerList;
+    },[]);
+    return names;
   }
 
-  getBeerNamesByType(type='Pale Ale'){
-    let beerList = `<UL>`;
-    this.beers.forEach( beer => {
-      if (beer.type === type) beerList += `<LI>${beer.brewer} - ${beer.name}</LI>`;
-    });
-    beerList += `</UL>`;
-    return beerList;
+  filterBeers(_searchItem){
+    if(_searchItem.type != 'All'){
+      return this.beers.filter((_beer) =>{
+        return _beer.type === _searchItem.type;
+      });
+    }
+    else{
+      return this.beers;
+    }
   }
 
   getBeerTypes() {
-    let types = this.beers.map(beer => {
-      console.log(beer.type);
-      return beer.type;
-    })
+    let types = this.beers.reduce((tlist, beer) => {
+      let dupe = tlist.some(b => {
+        return b === beer.type;
+      });
+      if(!dupe) tlist.push(beer.type);
+      return tlist;
+    },[]);
+    return types;
+  }
+
+
+    /*
+    getBeerNamesByType(type='All'){
+      return this.beers.filter( beer => {
+        return beer.type === type;
+      });
+    }
+  */
+}
+
+class BeerSelectView{
+  constructor(targetElement, App){
+    this.targetElement = targetElement;
+    this.App = App;
+    ["All",...this.App.AllBeers.getBeerTypes()].forEach(bType => {
+      document.querySelector('#beer-type').innerHTML += `<option value='${bType}'>${bType}</option>`;
+    });
+    this.onTypeChangeHandler = this.onTypeChangeHandler.bind(this);
+    this.targetElement.addEventListener('change', this.onTypeChangeHandler);
+
+  }
+
+  onTypeChangeHandler(evt) {
+    let selectedBeer = evt.target.options[evt.target.options.selectedIndex].value;
+    this.App.ViewBeerList.renderBeerList(this.App.AllBeers.filterBeers({"type":selectedBeer}));
   }
 
 }
 
-const AllBeers = new BeerList();
+class BeerListView{
 
-let newBeer = new Beer({name: "Bristle IPA", brewer: "Bo Bristle Brewing Company", type: "India Pale Ale", origin: "Ireland", status: "submit"});
-AllBeers.addBeer(newBeer);
-AllBeers.addBeer(new Beer({"name": "Extra Stout","brewer": "Guinness","type": "Stout","origin": "Ireland","status": "submit"}));
-AllBeers.addBeer(new Beer({"name": "IPA","brewer": "Smithwicks","type": "India Pale Ale","origin": "Ireland","status": "submit"}));
-AllBeers.addBeer(new Beer({"name": "IPA","brewer": "Sierra Nevada","type": "India Pale Ale","origin": "USA","status": "submit"}));
-AllBeers.addBeer(new Beer({"name": "Leann Follin","brewer": "O'Haras","type": "Stout","origin": "Ireland","status": "submit"}));
-AllBeers.addBeer(new Beer({"name": "Pale Ale","brewer": "O'Haras","type": "Pale Ale","origin": "Ireland","status": "submit"}));
-AllBeers.addBeer(new Beer({"name": "Boston Lager","brewer": "Boston Brewing Company","type": "Lager","origin": "USA","status": "submit"}));
-AllBeers.addBeer(new Beer({"name": "Brú Rí Irish Craft IPA","brewer": "Brú Brewery","type": "India Pale Ale","origin": "Ireland","status": "submit"}));
-AllBeers.addBeer(new Beer({"name": "Black IPA","brewer": "Blacks of Kinsale","type": "India Pale Ale","origin": "Ireland","status": "submit"}));
+  constructor(targetElement, App){
+    this.targetElement = targetElement;
+    this.App = App;
 
-document.querySelector('#beer-type').addEventListener('change', e => {
-  /*console.log(e.target.options[e.target.options.selectedIndex]);
-  console.log(e.target.options.selectedIndex);
-  console.log(e.target.options[e.target.options.selectedIndex].value);*/
-  let selectedBeer = e.target.options[e.target.options.selectedIndex].value;
-  document.querySelector('#gen-content').innerHTML = `The Beers on File are : ${AllBeers.getBeerNamesByType(selectedBeer)}`;
-});
+    let newBeer = new Beer({name: "Bristle IPA", brewer: "Bo Bristle Brewing Company", type: "India Pale Ale", origin: "Ireland", status: "submit"});
+    this.App.AllBeers.addBeer(newBeer);
+    this.App.AllBeers.addBeer(new Beer({"name": "Extra Stout","brewer": "Guinness","type": "Stout","origin": "Ireland","status": "submit"}));
+    this.App.AllBeers.addBeer(new Beer({"name": "IPA","brewer": "Smithwicks","type": "India Pale Ale","origin": "Ireland","status": "submit"}));
+    this.App.AllBeers.addBeer(new Beer({"name": "IPA","brewer": "Sierra Nevada","type": "India Pale Ale","origin": "USA","status": "submit"}));
+    this.App.AllBeers.addBeer(new Beer({"name": "Leann Follin","brewer": "O'Haras","type": "Stout","origin": "Ireland","status": "submit"}));
+    this.App.AllBeers.addBeer(new Beer({"name": "Pale Ale","brewer": "O'Haras","type": "Pale Ale","origin": "Ireland","status": "submit"}));
+    this.App.AllBeers.addBeer(new Beer({"name": "Boston Lager","brewer": "Boston Brewing Company","type": "Lager","origin": "USA","status": "submit"}));
+    this.App.AllBeers.addBeer(new Beer({"name": "Brú Rí Irish Craft IPA","brewer": "Brú Brewery","type": "India Pale Ale","origin": "Ireland","status": "submit"}));
+    this.App.AllBeers.addBeer(new Beer({"name": "Black IPA","brewer": "Blacks of Kinsale","type": "India Pale Ale","origin": "Ireland","status": "submit"}));
+  }
+
+  renderBeerList(_beers){
+    let listBlock = `<UL>`;
+    _beers.forEach(beer => {
+      listBlock += `<LI>${beer.brewer} - ${beer.name}</LI>`;
+    });
+    listBlock += `</UL>`
+    this.targetElement.innerHTML = `${listBlock}`;
+  }
+}
+
+
+
+class BeerApplication{
+
+  constructor(name) {
+    this.name = name;
+    this.AllBeers = new BeerList();
+    this.ViewBeerList = new BeerListView(document.getElementById('beer-list'), this);
+    this.ViewBeerSelect = new BeerSelectView(document.getElementById('beer-type'), this);
+  }
+}
 
 window.addEventListener('load', (e) => {
-  document.querySelector('#gen-content').innerHTML = `The Beers on File are : ${AllBeers.getbeerNames()}`;
-  AllBeers.getBeerTypes();
-}, false);
+  let MyBeerApp = new BeerApplication('Craft Beer');
+  // Target to Refactor.
+  MyBeerApp.ViewBeerList.renderBeerList(MyBeerApp.AllBeers.getBeers());
+});
