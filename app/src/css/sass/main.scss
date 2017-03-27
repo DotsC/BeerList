@@ -6,15 +6,19 @@
  * Kroc Camen, and the H5BP dev community and team.
  */
 
-$defaultFontColor: #222;
+$defaultPageBackground: rgba(122, 124, 34, 1);//linear-gradient(90deg, #485563 90%, #29323c 10%);
+$defaultFontColor: rgba(239,235,222,1); //Whisper White
+$defaultBackgroundColor: rgba(45, 44, 47, 1); // Jet Black
+$defaultDebugColor: rgba(199, 31, 45, 1); // High Risk Red
+$defaultRowDebugColor: rgba(237, 255, 0, 1); // Safety Yellow
 $defaultFontSize: 1em;
 $defaultLineHeight: 1.4;
 
 /* ==========================================================================
    Base styles: opinionated defaults
    ========================================================================== */
-
 html {
+    background: $defaultPageBackground;
     color: $defaultFontColor;
     font-size: $defaultFontSize;
     line-height: $defaultLineHeight;
@@ -69,10 +73,90 @@ textarea {
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
-#gen-content {
-  width:100%;
-  border: 1px solid #eeeeee;
+@import url(https://fonts.googleapis.com/css?family=Walter+Turncoat);
+
+
+
+body {
+  font-size: 14px;
+  color: #E8E8E8;
+  font-family: "Walter Turncoat", cursive;
+  display: block;
+  width: 80%;
+  height: 80%;
+  min-height: auto;
+  margin: 30px auto 0 auto;
+  background-color: $defaultBackgroundColor;
+  padding: 20px 30px;
+  overflow-y: auto;
+  box-shadow: -1px 2px 2px 0px #555, inset 0 0 10px 0 #555;
 }
+
+#app-content {
+  section {
+    max-width: 740px;
+    margin: 5px auto 5px;
+    display: flex;
+
+    /* Then we define the flow direction and if we allow the items to wrap
+     * Remember this is the same as:
+     * flex-direction: row;
+     * flex-wrap: wrap; */
+    flex-flow: row wrap;
+
+    /* Then we define how is distributed the remaining space */
+    justify-content: space-around;
+
+
+
+    .column:first-of-type{
+        flex-basis: 0px;
+    }
+
+    .column {
+      background-color: $defaultDebugColor;
+      margin: 5px;
+      flex-basis: 10px;
+      flex-shrink: 1;
+      flex-grow: 1;
+      justify-content: space-around;
+    }
+
+    .content {
+      flex-shrink: 8;
+      flex-grow: 8;
+    }
+
+    .title {
+      flex-shrink: 8;
+      flex-grow: 8;
+    }
+
+    .logo {
+        flex-shrink: 2;
+        flex-grow: 2;
+
+        .site_logo {
+          width: 128px;
+          height: 128px;
+          background-image: url("../img/beer-glass.svg");
+          background-size: 128px 128px;
+          background-position: 0 0;
+          background-repeat: no-repeat;
+        }
+
+    }
+  }
+
+  section.row{
+    min-height: 50px;
+    background-color: $defaultRowDebugColor;
+    overflow: visible;
+  }
+
+}
+
+
 
 /* ==========================================================================
    Media Queries

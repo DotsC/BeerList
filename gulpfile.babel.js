@@ -9,11 +9,14 @@ const sourcePath = './app/src';
 
 const cssPath = `${buildPath}/css/`;
 const jsPath = `${buildPath}/js/`;
+const imgPath = `${buildPath}/img/`;
 
 const allHtmlPath = `${sourcePath}/**/*.html`;
 const allSassPath = `${sourcePath}/css/sass/**/*.scss`;
+const allImgPath = `${sourcePath}/img/**/*.svg`;
 const allCssPath = `${sourcePath}/css/*.min.css`;
 const allJSPath = `${sourcePath}/js/**/*.js`;
+
 
 /* SASS & CSS Processing and copy */
 gulp.task('sass', () => {
@@ -25,6 +28,14 @@ gulp.task('css', () => {
   return gulp.src(`${allCssPath}`)
     .pipe(gulp.dest(`${cssPath}`));
 });
+
+gulp.task('images', () => {
+  return gulp.src(`${allImgPath}`)
+    .pipe(gulp.dest(`${imgPath}`));
+});
+
+
+
 /* Util watch for Sass Dev */
 gulp.task('sass:watch', () => {
   gulp.watch(`${allSassPath}`, ['sass']);
@@ -58,6 +69,6 @@ gulp.task('watch', () => {
  //gulp.watch([`${allHtmlPath}`], ['html']);
 });
 
-gulp.task('build', ['js', 'html', 'sass', 'css']);
+gulp.task('build', ['js', 'html', 'sass', 'css', 'images']);
 
 gulp.task('default', ['connect', 'watch']);
