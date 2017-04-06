@@ -5,8 +5,7 @@
  * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
  * Kroc Camen, and the H5BP dev community and team.
  */
-
-$defaultPageBackground: rgba(122, 124, 34, 1);//linear-gradient(90deg, #485563 90%, #29323c 10%);
+$defaultPageBackground: rgba(122, 124, 34, 1); //linear-gradient(90deg, #485563 90%, #29323c 10%);
 $defaultFontColor: rgba(239,235,222,1); //Whisper White
 $defaultBackgroundColor: rgba(45, 44, 47, 1); // Jet Black
 $defaultDebugColor: rgba(199, 31, 45, 1); // High Risk Red
@@ -73,14 +72,24 @@ textarea {
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
-@import url(https://fonts.googleapis.com/css?family=Walter+Turncoat);
+//@import url(https://fonts.googleapis.com/css?family=Walter+Turncoat);
 
+@font-face {
+  font-family: "KGBlankSpaceSketch";
+  src: url("../font/KGBlankSpaceSketch.ttf");
+}
+
+@font-face {
+  font-family: "KGBlankSpaceSolid";
+  src: url("../font/KGBlankSpaceSolid.ttf");
+}
 
 
 body {
   font-size: 14px;
   color: #E8E8E8;
-  font-family: "Walter Turncoat", cursive;
+  //font-family: "Walter Turncoat", cursive;
+  font-family: "KGBlankSpaceSketch";
   display: block;
   width: 80%;
   height: 80%;
@@ -90,6 +99,7 @@ body {
   padding: 20px 30px;
   overflow-y: auto;
   box-shadow: -1px 2px 2px 0px #555, inset 0 0 10px 0 #555;
+  letter-spacing: 0.4em;
 }
 
 #app-content {
@@ -123,8 +133,8 @@ body {
     }
 
     .content {
-      flex-shrink: 8;
-      flex-grow: 8;
+      flex-shrink: 10;
+      flex-grow: 10;
     }
 
     .title {
@@ -150,7 +160,7 @@ body {
 
   section.row{
     min-height: 50px;
-    background-color: $defaultRowDebugColor;
+    //background-color: $defaultRowDebugColor;
     overflow: visible;
   }
 

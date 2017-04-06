@@ -8,14 +8,17 @@ const buildPath = './app/build';
 const sourcePath = './app/src';
 
 const cssPath = `${buildPath}/css/`;
-const jsPath = `${buildPath}/js/`;
 const imgPath = `${buildPath}/img/`;
+const jsPath = `${buildPath}/js/`;
+const fontPath = `${buildPath}/font/`;
+
 
 const allHtmlPath = `${sourcePath}/**/*.html`;
 const allSassPath = `${sourcePath}/css/sass/**/*.scss`;
 const allImgPath = `${sourcePath}/img/**/*.svg`;
 const allCssPath = `${sourcePath}/css/*.min.css`;
 const allJSPath = `${sourcePath}/js/**/*.js`;
+const allFontPath = `${sourcePath}/font/*.ttf`;
 
 
 /* SASS & CSS Processing and copy */
@@ -56,6 +59,14 @@ gulp.task('html', () => {
    .pipe(gulp.dest(`${buildPath}`));
 });
 
+/*fonts Processing and copy */
+gulp.task('font', () => {
+  return gulp.src(`${allFontPath}`)
+   .pipe(connect.reload())
+   .pipe(gulp.dest(`${fontPath}`));
+});
+
+
 /* Connect / Watch and Defaults. */
 gulp.task('connect', () => {
   connect.server({
@@ -69,6 +80,6 @@ gulp.task('watch', () => {
  //gulp.watch([`${allHtmlPath}`], ['html']);
 });
 
-gulp.task('build', ['js', 'html', 'sass', 'css', 'images']);
+gulp.task('build', ['js', 'html', 'sass', 'css', 'images','font']);
 
 gulp.task('default', ['connect', 'watch']);
